@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="create-form" class='container'>
+	<ul v-for='error in errors'>
+		<li class='text-danger'>
+			[[error]]
+		</li>
+	</ul>
+	<form class='form-group' @keydown.enter='submit' >
+		<label class='form-control-label' for='first_name'>First Name</label>
+		<input type='text'id='first_name' class='form-control' v-model="first_name" placeholder="" :class="{'is-valid':valid_first_name}"/>
+
+		<label for='last_name'>Last Name</label>
+		<input id='last_name' class='form-control' v-model="last_name" placeholder="" required='true'/>
+
+		<label for='phone_number'>Phone Number</label>
+		<input id='phone_number' class='form-control' v-model="phone_number" />
+
+		<label for='email'>Email</label>
+		<input id='email' class='form-control' v-model="email" type='email' />
+
+		<label for='Referred By'>Referred By</label>
+		<select class='form-control' v-model='referred_by'>
+			<option>Apple Appointment</option>
+			<option>Apple Recommendation</option>
+			<option>Internet Search</option>
+		</select>
+
+		<label for='addressln1'>Address Line 1</label>
+		<input id='addressln1' placeholder="" v-model="address.ln1" class='form-control'>
+
+		<label for='addressln2'>Address Line 2</label>
+		<input id='addressln2' placeholder="" v-model="address.ln2" class='form-control'>
+
+		<label for='City'>City</label>
+		<input type='text' id='City' placeholder="" v-model="address.city" class='form-control'>
+
+		<label for='State'>State</label>
+		<input type='text' id='State' placeholder="" v-model="address.state" class='form-control'>
+
+		<label for='Zip Code'>Zip Code</label>
+		<input type='text' id='Zip Code' placeholder="" v-model="address.postal_code" class='form-control'>
+
+		<span class='row'>
+			<a class='btn btn-warn btn-lg active' href='/customers/'>Cancel</a>
+			<button class='btn-primary btn-lg' @click='submit' type='submit'>Create Customer</button>
+		</span>
+	</form>
+	<label for='submit' class='text-danger' :class='{"invisible": !errors.length}'>
+		Please fix the errors in the form before submitting
+	</label>
+	
+
+</div>
+<script src='{% static "/js/create.js" %}'></script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div id='customer-display' class='container'>
+	<div class='row jumbotron' :class="{'hidden':editing}">
+		<a class='btn-lg btn-primary' href='/customers/'>Back</a>
+		<div class='col-md-4 col-sm-4'>
+			<h3>[[customer.first_name]] [[customer.last_name]]</h3>
+			<h4>[[customer.phone_number]]</h4> 
+			<h4>[[customer.email]]</h4> 
+			<p>[[customer.address.ln1]]</p>
+			<p>[[customer.address.ln2]]</p>
+			<p>[[customer.address.city]]</p>
+			<p>[[customer.address.state]]</p>
+			<p>[[customer.address.postal_code]]</p>
+			<span :class="{'hidden':error_loading}">
+				<button class='btn-sm' @click="toggle_editing">Edit Customer</button>
+				<button class='btn-sm btn-danger' @click="delete_customer">Delete Customer</button>
+			</span>
+		</div>
+		<div class='col-md-4 col-sm-4' :class="{'hidden':error_loading}">
+			<h3>Open Tickets</h3>
+			<button class='btn-sm'>New Ticket</button>
+		</div>
+		<div class='col-md-4 col-sm-4':class="{'hidden':error_loading}">
+			<h3>Unpaid Invoices</h3>
+			<button class='btn-sm'>New Invoice</button>
+		</div>
+	</div>
+	<div class='jumbotron' :class="{'hidden':!editing}">
+		<div class="form-group">
+			<ul v-for='error in errors'>
+				<li class='text-danger'>[[error]]</li>
+			</ul>
+			
+			<label for='first_name'>First Name</label>
+			<input id='first_name' class='form-control' v-model="customer.first_name" placeholder=""/>
+
+			<label for='last_name'>Last Name</label>
+			<input id='last_name' class='form-control' v-model="customer.last_name" placeholder=""/>
+
+			<label for='phone_number'>Phone Number</label>
+			<input id='phone_number' class='form-control' v-model="customer.phone_number" />
+
+			<label for='email'>Email</label>
+			<input id='email' class='form-control' v-model="customer.email" type='email' />
+
+			<label for='Referred By'>Referred By</label>
+			<select class='form-control' v-model='customer.referred_by'>
+				<option>Apple Appointment</option>
+				<option>Apple Recommendation</option>
+				<option>Internet Search</option>
+			</select>
+
+			<label for='addressln1'>Address Line 1</label>
+			<input id='addressln1' placeholder="" v-model="customer.address.ln1" class='form-control'>
+
+			<label for='addressln2'>Address Line 2</label>
+			<input id='addressln2' placeholder="" v-model="customer.address.ln2" class='form-control'>
+
+			<label for='City'>City</label>
+			<input type='text' id='City' placeholder="" v-model="customer.address.city" class='form-control'>
+
+			<label for='State'>State</label>
+			<input type='text' id='State' placeholder="" v-model="customer.address.state" class='form-control'>
+
+			<label for='Zip Code'>Zip Code</label>
+			<input type='text' id='Zip Code' placeholder="" v-model="customer.address.postal_code" class='form-control'>
+			<div class='container'>
+				<button class='btn-lg' @click="update_customer">Save Changes</button>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="{% static '/js/customer.js' %}"></script>
+{% endblock %}

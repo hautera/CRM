@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div id='search'>
+	<div class='container'>
+		<div class='jumbotron'>
+			<h3>Search Customers</h3>
+			<span><input type='text' v-model='query' @keyup.enter='search'> <button class='btn-primary' @click="search">Search</button></span>
+			<div v-bind:class="{'text-danger': hasError, }">
+				<h4>[[message]]</h4>
+			</div>
+			<a class='btn btn-secondary btn-sm' role='button' href="/customers/create">Create Customer</a>
+		</div>
+	</div>
+	<div class='container'>
+		<table class='table table-hover' >
+			<thead>
+				<tr>
+					<th scope='col'>Name</th>
+					<th scope='col'>Phone</th>
+					<th scope='col'>Email</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for='customer in customers'>	
+					<td><a :href='[[customer.pk]]'>[[customer.first_name]] [[customer.last_name]]</a></td>
+					<td>[[customer.phone_number]]</td>
+					<td>[[customer.email]]</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<script src='{% static '/js/index.js'%}'></script>
+
+{% endblock %}
