@@ -1,0 +1,7 @@
+/* 
+* Used for form  validation
+*/
+.is-invalid {
+    border: 1px solid #e20e0e;
+}
+

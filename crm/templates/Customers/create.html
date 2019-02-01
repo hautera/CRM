@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="create-form" class='container'>
+	<div class='container'><h1>Create a new Customer</h1></div>
+		<div class='row'>
+			<div class='col-sm-6 col-md-6 col-lg-6'>
+				<label class='form-control-label' :class="{'text-danger': !valid_first_name && form_validated }" 
+					for='first_name'>First Name</label>
+				<input type='text' id='first_name' class='form-control' v-model="first_name" placeholder="" 
+					:class='{"is-invalid": !valid_first_name && form_validated}'/>
+				<div class='text-danger' :class="{'hidden': valid_first_name || !form_validated}">Please enter a valid first name</div>
+			</div>
+			<div class='col-sm-6 col-md-6 col-lg-6'>
+				<label for='last_name' :class="{'text-danger': !valid_last_name && form_validated}">Last Name</label>
+				<input id='last_name' class='form-control' v-model="last_name" placeholder="" 
+					:class='{"is-invalid": !valid_last_name && form_validated}'/>
+				<div class='text-danger' :class="{'hidden': valid_last_name || !form_validated}">Please enter a valid last name</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class='col-sm-6 col-md-6 col-lg-6'>
+				<label for='phone_number' :class="{'text-danger':form_validated && !valid_phone_entry}">Phone Number</label>
+				<input type='text' id='phone_number' class='form-control' :class="{'is-invalid':form_validated && !valid_phone_entry}" 
+					v-model="phone_number" />
+				<div class="text-danger" :class="{'hidden':!form_validated || valid_phone_entry}">Please enter a valid phone number</div>
+			</div>
+			<div class='col-sm-6 col-md-6 col-lg-6'>
+				<label for='email' :class="{'text-danger' : form_validated && !valid_email_entry}">Email</label>
+				<input id='email' class='form-control' :class="{'is-invalid': form_validated && !valid_email_entry}" v-model="email" type='email' />
+				<div class='text-danger' :class="{'hidden':!form_validated || valid_email_entry}">
+				Please enter a valid email 
+				</div>
+			</div>
+		</div>
+		<div>
+			<label for='Referred By'>Referred By</label>
+			<select class='form-control' v-model='referred_by' :class="{'is-invalid':form_validated && !referred_by}">
+				<option v-for="option in referred_by_codes" :value="option.value">	
+					[[option.display_name]]
+				</option>
+			</select>
+			<div class='text-danger' :class="{'hidden':!form_validated || referred_by} ">
+				Please tell us how the customer heard about us
+			</div>
+		</div>
+
+		<label for='addressln1' :class="{'text-danger':!valid_address && form_validated}">Address</label>
+		<input id='addressln1' placeholder="" v-model="address.ln1" class='form-control'
+			:class="{'is-invalid':!valid_address && form_validated}">
+
+		<label for='addressln2' :class="{'is-invalid':!valid_address && form_validated}">Line 2</label>
+		<input id='addressln2' placeholder="" v-model="address.ln2" class='form-control'
+			:class="{'is-invalid':!valid_address && form_validated}">
+		<div class='row'>
+			<div class='col-sm-4'>
+				<label for='City'>City</label>
+				<input type='text' id='City' placeholder="" v-model="address.city" class='form-control'> 
+			</div>
+
+			<div class='col-sm-2'>
+				<label for='State'>State</label>
+				<input type='text' id='State' placeholder="" v-model="address.state" class='form-control'>
+			</div>
+			<div class='col-sm-3'>
+				<label for='Zip Code'>Zip Code</label>
+				<input type='text' id='Zip Code' placeholder="" v-model="address.postal_code" class='form-control'>
+			</div>
+		</div>
+
+
+
+
+	<label for='submit' class='text-danger' :class='{"invisible": no_errors || !form_validated}'>
+		Please fix the errors in the form before submitting
+	</label>
+	<span class='row'>
+		<a class='btn btn-warn btn-lg active' href='/customers/'>Cancel</a>
+		<button class='btn-primary btn-lg' @click='submit'>Create Customer</button>
+	</span>
+
+</div>
+<script src='{% static "/js/create.js" %}'></script>
+{% endblock %}

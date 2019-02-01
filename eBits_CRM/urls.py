@@ -16,15 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from Customers import views
-import Customers
+from crm import views
+import crm
 
 router = routers.DefaultRouter()
 router.register(r'customer', views.CustomerRUDView)
 router.register(r'customer', views.CustomerLCView)
+router.register(r'tickets', views.TicketLCView )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('customers/', include('Customers.urls'))
+    path('customers/', include('crm.urls'))
 ]
